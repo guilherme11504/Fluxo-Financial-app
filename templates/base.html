@@ -1,0 +1,27 @@
+<!-- templates/base.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Controle Financeiro{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Controle Financeiro</h1>
+        <!-- navbar ou links de navegação -->
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- conteúdo das páginas -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>© 2025 - Pegazus</p>
+    </footer>
+    
+</body>
+</html>

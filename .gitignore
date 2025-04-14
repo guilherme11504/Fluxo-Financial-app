@@ -1,0 +1,62 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.so
+
+# Virtual env
+venv/
+env/
+ENV/
+.venv/
+pip-selfcheck.json
+
+# VSCode / PyCharm
+.vscode/
+.idea/
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.sqlite3
+db.sqlite3
+media/
+staticfiles/
+local_settings.py
+
+# Migrations
+*/migrations/__pycache__/
+*/migrations/*.pyc
+*/migrations/*.pyo
+*/migrations/*.pyd
+*/migrations/*.py
+!*/migrations/__init__.py
+
+# System
+.DS_Store
+Thumbs.db
+*.bak
+*.swp
+*.swo
+
+# Secrets
+.env
+*.secret
+secrets.json
+
+# Pytest / Coverage
+htmlcov/
+.coverage
+.tox/
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+
+# Node / Frontend (se usar)
+node_modules/
+dist/
+build/
