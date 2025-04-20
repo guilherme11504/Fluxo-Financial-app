@@ -43,39 +43,38 @@ Além da utilidade prática, este projeto serve como um estudo aprofundado em de
 
 finance_app/
 ├── apps/
-│   ├── autenticacao/       # App de autenticação de usuários
-│   └── ...                 # Próximos apps como finanças, dashboard etc.
+│   ├── autenticacao/       - App de autenticação de usuários
+│   └── ...                 - Próximos apps como finanças, dashboard etc.
 ├── templates/
-│   └── shared/             # base.html e templates reutilizáveis
+│   └── shared/             - base.html e templates reutilizáveis
 ├── static/
 │   ├── css/
 │   └── js/
-├── core/                   # Configurações globais
+├── core/                   - Configurações globais
 ├── manage.py
 ├── Dockerfile
 ├── docker-compose.yml
 ├── .env
 ├── requirements.txt
 └── README.md
-📈 Planejamento e Organização
+
+##📈 Planejamento e Organização
 Este projeto segue uma organização baseada em Issues e Kanban no GitHub Projects, com as colunas:
 
-Backlog
+- Backlog
 
-Ready
+- Ready
 
-In Progress
+- In Progress
 
-In Review
+- In Review
 
-Done
+- Done
 
 Você pode acompanhar o progresso diretamente aqui no GitHub Projects.
 
-🚀 Como executar localmente
-bash
-Copiar
-Editar
+##🚀 Como executar localmente
+
 # Clonar o repositório
 git clone https://github.com/seu-usuario/finance-app.git
 cd finance-app
