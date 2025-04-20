@@ -1,27 +1,52 @@
-<!-- templates/base.html -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Controle Financeiro{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Meu Site{% endblock %}</title>
+    <link rel="stylesheet" href="{% static '/css/base.css' %}">
 </head>
 <body>
-    <header>
-        <h1>Controle Financeiro</h1>
-        <!-- navbar ou links de navegação -->
-    </header>
+    <nav class="navbar">
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Sobre</a>
+            <a href="#">Produtos</a>
+            <a href="#">Contato</a>
+        </div>
 
-    <main>
+        <div class="search-bar">
+            <input type="text" placeholder="Pesquisar..." id="searchInput">
+            <button onclick="realizarPesquisa()">Buscar</button>
+        </div>
+
+        <div class="user-section">
+            <img src="{% static 'images/profile-placeholder.png' %}" alt="Foto de perfil" class="profile-pic">
+            <span>{{ user.username|default:'Visitante' }}</span>
+        </div>
+    </nav>
+
+    <main class="content">
         {% block content %}
-        <!-- conteúdo das páginas -->
         {% endblock %}
     </main>
 
-    <footer>
-        <p>© 2025 - Pegazus</p>
-    </footer>
-    
+    <script>
+        function realizarPesquisa() {
+            const searchTerm = document.getElementById('searchInput').value;
+            if (searchTerm.trim() !== '') {
+                // Você pode personalizar a URL de pesquisa de acordo com sua aplicação
+                window.location.href = `/pesquisa/?q=${encodeURIComponent(searchTerm)}`;
+            }
+        }
+
+        // Adiciona funcionalidade de pesquisa ao pressionar Enter
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                realizarPesquisa();
+            }
+        });
+    </script>
 </body>
 </html>

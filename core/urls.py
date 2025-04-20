@@ -16,9 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.shortcuts import redirect
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('autenticacao.urls')),
+    #aqui defino a rota padrão para a de login, já que no momento, não existe uma pagina inicial
+    path('', lambda request: redirect('login')),
 ]
 
