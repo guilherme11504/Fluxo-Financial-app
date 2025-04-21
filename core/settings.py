@@ -82,13 +82,17 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'finance_db',  # Nome do banco de dados
-        'USER': 'root',
-        'PASSWORD': 'GrupoGPZ153624@#',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'NAME': 'mydb',              # mesmo valor de MYSQL_DATABASE
+        'USER': 'root',              # padrão do MySQL
+        'PASSWORD': 'rootpassword',  # mesmo valor de MYSQL_ROOT_PASSWORD
+        'HOST': 'db',                # nome do serviço no docker-compose.yml
+        'PORT': '3306',              # porta padrão do MySQL
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        }
     }
 }
+
 
 
 
