@@ -1,0 +1,30 @@
+
+services:
+  db:
+    image: mysql:8.0
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    environment:
+      MYSQL_ROOT_PASSWORD: Bo3vaisefoda
+      MYSQL_DATABASE: finance_db
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+  
+  web:
+    build: .
+    command: sh -c "/wait-for-it.sh db:3306 -- python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  db_data:
