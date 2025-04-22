@@ -10,6 +10,12 @@ COPY requirements.txt /app/
 # Instalar as dependências do projeto
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Copia o script para dentro do container
+COPY /wait-for-it.sh /wait-for-it.sh
+
+# Dá permissão de execução
+RUN chmod +x /wait-for-it.sh
+
 # Copiar o código do projeto para dentro do container
 COPY . /app/
 
