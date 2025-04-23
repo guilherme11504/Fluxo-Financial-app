@@ -14,7 +14,7 @@ def login_view(request):
             return redirect('dashboard')  # ainda vamos criar essa rota
         else:
             return render(request, 'login.html', {'erro': 'Usuário ou senha inválidos'})
-    return render(request, 'autenticacao/login.html')
+    return render(request, 'login.html')
 
 def logout_view(request):
     logout(request)
@@ -27,4 +27,4 @@ def register_view(request):
         senha = request.POST['senha']
         user = User.objects.create_user(username=username, email=email, password=senha)
         return redirect('login')
-    return render(request, 'autenticacao/register.html')
+    return render(request, 'register.html')
