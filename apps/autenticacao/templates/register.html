@@ -4,23 +4,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cadastro</title>
-  <link rel="stylesheet" href="{% static 'autenticacao/css/register.css' %}">
+  <title>Fluxo-Cadastro</title>
+  <link rel="stylesheet" href="{% static 'autenticacao/css/auth_forms.css' %}">
+  <!-- adiciona o favicon -->
+  <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
 </head>
 <body>
   <div class="logo-container">
-    <img src="{% static 'images/fluxo_logo.png' %}" alt="Logo">
+    <img src="{% static 'images/fluxo_logo.png' %}" alt="Logo" class="img-logo">
   </div>
   <div class="form-container">
-    <h2>Cadastro</h2>
+    <h2>Cadastre-se!</h2>
     <form method="post">  
       {% csrf_token %}
-      <input type="text" name="username" placeholder="Usuário"><br>
-      <input type="email" name="email" placeholder="E-mail"><br>
-      <input type="password" name="senha" placeholder="Senha"><br>
-      <button type="submit">Cadastrar</button>
+      <label for="username">Nome completo*</label>
+      <input type="text" name="username" placeholder="Insira seu nome" required>
+      <label for="email">E-mail*</label>
+      <input type="email" name="email" placeholder="Insira seu e-mail" required>
+      <label for="senha">Senha*</label>
+      <input type="password" name="senha" placeholder="Insira a sua senha" required>
+      <label for="confirm-password">Confirme sua senha*</label>
+      <input type="confirm-password" name="confirm-password" placeholder="Insira novamente a sua senha" required>
+      <div id="msg-erro"></div>
+      <button type="submit">Criar conta</button>
     </form> 
-    <a href="/auth/login/">Já tem conta? Faça login</a>
+    <span>Ja possui uma conta? <a href="{% url 'login' %}">Faça login</a></span>
   </div>
+  <script src="{% static 'autenticacao/js/register.js' %}"></script>
 </body>
 </html>
