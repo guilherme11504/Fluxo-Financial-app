@@ -11,7 +11,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=senha)
         if user:
             login(request, user)
-            return redirect('dashboard')  # ainda vamos criar essa rota
+            return redirect('dashboard') 
         else:
             return render(request, 'login.html', {'erro': 'Usuário ou senha inválidos'})
     return render(request, 'login.html')
