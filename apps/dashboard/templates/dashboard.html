@@ -1,22 +1,13 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fluxo-Dashboard</title>
-  <link rel="stylesheet" href="{% static 'dashboard/css/dashboard.css' %}">
-  <!-- adiciona o favicon -->
-  <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
-</head>
-<body>
-    <div class="top-container">
-        <div class="logo-container">
-            <img src="{% static 'images/fluxo_logo.png' %}" alt="Logo" class="img-logo">
-        </div>
-    </div>
-    <div class="dash-container">
-    </div>
-    <script src="{% static 'dashboard/js/dashboard.js' %}"></script>
-</body>
-</html>
+{% block title %}Fluxo-Dashboard{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'dashboard/css/dashboard.css' %}">
+{% endblock %}  
+
+{% block content %} 
+<div class="p-6">
+    <h1 class="text-2xl font-semibold mb-4">Dashboard</h1>
+    
+</div>
+{% endblock %}
