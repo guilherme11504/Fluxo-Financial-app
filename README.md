@@ -82,9 +82,10 @@ cd finance-app
 # Subir o projeto com Docker
 docker-compose up --build
 
+link da modelagem do banco de dados: https://app.diagrams.net/?src=about#Hguilherme11504%2FFluxo-Financial-app%2Fmain%2FFluxo.drawio#%7B%22pageId%22%3A%22C5RBs43oDa-KdzZeNtuy%22%7D
+
+
 # Acessar no navegador
 http://localhost:8000
 📌 Autor
 Desenvolvido por Guilherme Duarte
-Formado em Análise e Desenvolvimento de sistemas pela Estácio
-Especialista em E-commerce e apaixonado por tecnologia 👨‍💻
