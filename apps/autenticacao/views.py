@@ -3,6 +3,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.contrib import messages
 
 def login_view(request):
     if request.method == 'POST':
@@ -13,7 +14,8 @@ def login_view(request):
             login(request, user)
             return redirect('dashboard') 
         else:
-            return render(request, 'login.html', {'erro': 'Usuário ou senha inválidos'})
+            messages.error(request, 'Usuário ou(e) senha incorretos.')
+            return render(request, 'login.html')
     return render(request, 'login.html')
 
 def logout_view(request):
@@ -25,6 +27,10 @@ def register_view(request):
         username = request.POST['username']
         email = request.POST['email']
         senha = request.POST['senha']
+        #verifica se o e-mail já existe
+        if User.objects.filter(email=email).exists():
+            messages.error(request, 'E-mail ja cadastrado.')
+            return render(request, 'register.html')
         user = User.objects.create_user(username=username, email=email, password=senha)
         return redirect('login')
     return render(request, 'register.html')
