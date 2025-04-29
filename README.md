@@ -84,6 +84,8 @@ docker-compose up --build
 
 link da modelagem do banco de dados: https://app.diagrams.net/?src=about#Hguilherme11504%2FFluxo-Financial-app%2Fmain%2FFluxo.drawio#%7B%22pageId%22%3A%22C5RBs43oDa-KdzZeNtuy%22%7D
 
+COMANDO PARA CRIAR NOVOS APPS python manage.py start_app {NOME_DO_APP}
+
 
 # Acessar no navegador
 http://localhost:8000
