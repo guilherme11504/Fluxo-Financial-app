@@ -26,5 +26,7 @@ urlpatterns = [
     path('auth/', include('apps.autenticacao.urls')),
     path('', lambda request: redirect('login')),
     path('dashboard/', include('apps.dashboard.urls')),
+    path('cartoes/', include('apps.cartoes.urls')),
+    path('categorias/', include('apps.categorias.urls')),
 ]
 
