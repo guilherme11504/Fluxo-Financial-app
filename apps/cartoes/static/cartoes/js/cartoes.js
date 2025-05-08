@@ -3,53 +3,71 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (cadastrarBtn) {
       cadastrarBtn.addEventListener("click", () => {
-        // Evita múltiplos modais
-        if (document.querySelector("#modal-cartao")) return;
-  
-        const modalHTML = `
-          <div id="modal-cartao" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div class="bg-white text-gray-900 rounded-lg p-6 w-full max-w-md shadow-lg relative">
-              <h2 class="text-xl font-semibold mb-4">Cadastrar Cartão</h2>
-              <form id="form-cartao">
-                <label class="block mb-2 font-medium">Nome do Cartão</label>
-                <input name="nome" type="text" required
-                       class="w-full border border-gray-300 rounded px-3 py-2 mb-4 focus:outline-none focus:ring focus:border-emerald-500"/>
-  
-                <div class="flex justify-end gap-2">
-                  <button type="button" id="btn-cancelar" 
-                          class="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 text-gray-800">
-                    Cancelar
-                  </button>
-                  <button type="submit" 
-                          class="px-4 py-2 rounded bg-emerald-500 hover:bg-emerald-600 text-white font-semibold">
-                    Salvar
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        `;
-  
-        document.body.insertAdjacentHTML("beforeend", modalHTML);
-  
-        // Fechar modal
-        document.querySelector("#btn-cancelar").addEventListener("click", () => {
-          document.querySelector("#modal-cartao").remove();
-        });
-  
-        // Submeter formulário
-        document.querySelector("#form-cartao").addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const nome = e.target.nome.value;
-  
-          try {
-            const response = await fetch("/cartoes/cadastrar/", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "X-CSRFToken": getCookie("csrftoken"),
-              },
-              body: new URLSearchParams({ nome }),
+          // Evita múltiplos modais
+          if (document.querySelector("#modal-cadastro-cartao")) return;
+
+          const modalHTML = `
+              <div id="modal-cadastro-cartao" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                  <div class="bg-gray-900 p-6 rounded-xl shadow-lg w-full max-w-2xl text-white relative">
+                      <h2 class="text-2xl font-bold mb-4">Cadastrar Novo Cartão</h2>
+
+                      <div class="mb-4 ErrorContainer">
+                          <p class="text-sm text-red-500 Error"></p>
+                      </div>
+
+                      <!-- Cartão visual -->
+                      <div class="bg-gradient-to-r from-purple-500 to-blue-600 text-white p-6 rounded-xl shadow mb-6">
+                          <h3 class="text-xl font-semibold" id="preview-nome">Nome do Cartão</h3>
+                          <p class="text-sm mt-1" id="preview-bandeira">Bandeira</p>
+                          <p class="text-sm mt-1" id="preview-banco">Banco</p>
+                          <p class="text-sm mt-1" id="preview-limite">Limite: R$ 0.00</p>
+                          <p class="text-sm mt-1" id="preview-dia">Fechamento: -- | Pagamento: --</p>
+                      </div>
+
+                      <form id="form-cadastro-cartao">
+                          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              <input type="text" name="nome" placeholder="Nome do Cartão"class="px-4 py-2 rounded bg-gray-800 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500" oninput="atualizaPreview()" required>
+                              <input type="text" name="bandeira" placeholder="Bandeira" class="px-4 py-2 rounded bg-gray-800 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500" oninput="atualizaPreview()" required>
+                              <input type="text" name="banco" placeholder="Banco" class="px-4 py-2 rounded bg-gray-800 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500" oninput="atualizaPreview()" required>
+                              <input type="number" step="0.01" name="limite" placeholder="Limite (R$)" class="px-4 py-2 rounded bg-gray-800 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500" oninput="atualizaPreview()" required>
+                              <input type="number" name="dia_fechamento" placeholder="Dia do Fechamento" class="px-4 py-2 rounded bg-gray-800 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500" oninput="atualizaPreview()" required>
+                              <input type="number" name="dia_pagamento" placeholder="Dia do Pagamento" class="px-4 py-2 rounded bg-gray-800 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500" oninput="atualizaPreview()" required>
+                              <label class="flex items-center mt-2 col-span-2">
+                                  <input type="checkbox" name="ativo" class="mr-2" checked> Cartão Ativo
+                              </label>
+                          </div>
+                          <div class="mt-6 flex justify-end gap-4">
+                              <button type="button" id="btn-cancelar" class="px-4 py-2 bg-gray-600 rounded hover:bg-gray-700">Cancelar</button>
+                              <button type="submit" class="px-6 py-2 bg-purple-500 rounded hover:bg-purple-600">Salvar</button>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          `;
+
+          document.body.insertAdjacentHTML("beforeend", modalHTML);
+
+          // Ativa preview inicial
+          atualizaPreview();
+
+          // Fechar modal
+          document.querySelector("#btn-cancelar").addEventListener("click", () => {
+              document.querySelector("#modal-cadastro-cartao").remove();
+          });
+
+          // Submeter via AJAX
+          const form = document.querySelector("#form-cadastro-cartao");
+          form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+        
+            const formData = new FormData(form);
+            const data = new URLSearchParams();
+            formData.forEach((value, key) => {
+                if (key === "ativo") {
+                    data.append(key, "on");
+                } else {
+                    data.append(key, value);
+                }
             });
         
             try {
