@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block content %}
+
 <div class="min-h-screen text-white py-10 px-4">
     <div class="max-w-4xl mx-auto space-y-8">
 
@@ -41,7 +42,7 @@
                             <th class="px-4 py-2">Ações</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="cartoes-container">
                         {% for cartao in cartoes %}
                         <tr class="border-b border-gray-700 hover:bg-gray-700">
                             <td class="px-4 py-2">{{ cartao.id }}</td>
@@ -51,7 +52,7 @@
                             </td>
                         </tr>
                         {% empty %}
-                        <tr>
+                        <tr id="sem-cartoes">
                             <td colspan="4" class="px-4 py-4 text-center text-gray-400">
                                 Nenhum cartão cadastrado ainda.
                             </td>
