@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         
             try {
-                const response = await fetch("/cartoes/register/", {
+                const response = await fetch("/cartoes/register_card/", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded",

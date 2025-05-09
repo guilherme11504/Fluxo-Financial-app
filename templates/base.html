@@ -42,20 +42,22 @@
         {% endif %}
         group-hover:{% if request.resolver_match.url_name == 'dashboard' %}bg-gray-700{% else %}hover:bg-gray-700{% endif %}
         ">
-        <div class="
+    <div class="
         w-10 h-10 flex items-center justify-center transition-colors duration-300
         {% if request.resolver_match.url_name == 'dashboard' %}
             bg-gray-600 rounded-full
         {% endif %}
         group-hover:bg-transparent
         ">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M3 10h18M3 6h18M3 14h18M3 18h18" />
+        <!-- Ícone de Dashboard -->
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M3 3h7.5v7.5H3V3zm10.5 0H21v4.5h-7.5V3zM3 13.5h7.5V21H3v-7.5zM13.5 10.5H21V21h-7.5V10.5z" />
         </svg>
-        </div>
-        <span class="hidden group-hover:inline font-medium">Dashboard</span>
-    </a>
+    </div>
+    <span class="hidden group-hover:inline font-medium">Dashboard</span>
+</a>
+
 
     <a href="{% url 'cartoes' %}" class="flex items-center gap-4 px-4 py-4 pl-5 transition-colors duration-300 rounded-md
         {% if request.resolver_match.url_name == 'cartoes' %}
@@ -65,20 +67,22 @@
         {% endif %}
         group-hover:{% if request.resolver_match.url_name == 'cartoes' %}bg-gray-700{% else %}hover:bg-gray-700{% endif %}
         ">
-        <div class="
+    <div class="
         w-10 h-10 flex items-center justify-center transition-colors duration-300
         {% if request.resolver_match.url_name == 'cartoes' %}
             bg-gray-600 rounded-full
         {% endif %}
         group-hover:bg-transparent
         ">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M3 10h18M3 6h18M3 14h18M3 18h18" />
+        <!-- Ícone de Cartão de Crédito -->
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M2.25 6.75A2.25 2.25 0 014.5 4.5h15a2.25 2.25 0 012.25 2.25v1.5H2.25v-1.5zM21.75 9v8.25a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V9h19.5zM6.75 15.75h1.5" />
         </svg>
-        </div>
-        <span class="hidden group-hover:inline font-medium">Cartões</span>
-    </a>
+    </div>
+    <span class="hidden group-hover:inline font-medium">Cartões</span>
+</a>
+
 
     <a href="{% url 'logout' %}" class="flex items-center gap-4 px-4 py-4 pl-5 transition-colors duration-300 align-end hover:bg-red-600 rounded-md">
         <div class="w-10 h-10 flex items-center justify-center transition-colors duration-300 group-hover:bg-transparent">

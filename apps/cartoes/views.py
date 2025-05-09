@@ -13,7 +13,7 @@ def cartoes(request):
 
 def register_view(request):
     if request.method != "POST":
-        return redirect('cartoes:listar')  # ou onde fizer mais sentido
+        return redirect('dashboard:dashboard')
 
     user = request.user
 
