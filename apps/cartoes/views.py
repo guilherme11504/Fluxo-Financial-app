@@ -77,3 +77,78 @@ def register_view(request):
         }, status=201)              
     except Exception as e:
         return JsonResponse({'error': str(e)})
+
+
+def delete_cartao(request):
+    if request.method == 'POST':
+        cartao_id = request.POST.get('cartao_id')
+        try:
+            cartao = Cartao.objects.get(id=cartao_id)
+            cartao.delete()
+            messages.success(request, 'Cartão excluído com sucesso.')
+        except Cartao.DoesNotExist:
+            messages.error(request, 'Cartão não encontrado.')
+        except Exception as e:
+            messages.error(request, f'Erro ao excluir cartão: {str(e)}')
+
+    return redirect('cartoes:cartoes')
+
+def update_cartao(request):
+    if request.method == 'POST':
+        cartao_id = request.POST.get('cartao_id')
+        nome = request.POST.get('nome', '').strip()
+        bandeira = request.POST.get('bandeira', '').strip()
+        banco = request.POST.get('banco', '').strip()
+        limite = request.POST.get('limite', '')
+        dia_pagamento = request.POST.get('dia_pagamento', '')
+        dia_fechamento = request.POST.get('dia_fechamento', '')
+        ativo = request.POST.get('ativo') == 'on'
+
+        # Validação de campos obrigatórios
+        if not all([nome, bandeira, banco, limite, dia_pagamento, dia_fechamento]):
+            messages.error(request, 'Preencha todos os campos obrigatórios.')
+            return redirect('cartoes:cartoes')
+
+        # Conversões e validações numéricas
+        try:
+            limite = float(limite)
+            dia_pagamento = int(dia_pagamento)
+            dia_fechamento = int(dia_fechamento)
+        except ValueError:
+            return JsonResponse({'error': 'Valores inválidos para limite ou dias.'}, status=400)
+
+        if limite <= 0:
+            return JsonResponse({'error': 'Limite deve ser maior que zero.'}, status=400)
+
+        if dia_fechamento == dia_pagamento:
+            return JsonResponse({'error': 'Dia de fechamento e pagamento devem ser diferentes.'}, status=400)
+
+        if dia_fechamento > dia_pagamento:
+            return JsonResponse({'error': 'Dia de fechamento deve ser menor que o dia de pagamento.'}, status=400)
+
+        try:
+            cartao = Cartao.objects.get(id=cartao_id)
+            cartao.nome = nome
+            cartao.bandeira = bandeira
+            cartao.banco = banco
+            cartao.limite = limite
+            cartao.dia_pagamento = dia_pagamento
+            cartao.dia_fechamento = dia_fechamento
+            cartao.ativo = ativo
+            cartao.save()
+
+            return JsonResponse({
+                'id': cartao.id,
+                'nome': cartao.nome,
+                'bandeira': cartao.bandeira,
+                'banco': cartao.banco,
+                'limite': cartao.limite,
+                'dia_pagamento': cartao.dia_pagamento,
+                'dia_fechamento': cartao.dia_fechamento,
+                'ativo': cartao.ativo,
+            }, status=200)
+        except Cartao.DoesNotExist:
+            return JsonResponse({'error': 'Cartão não encontrado.'}, status=404)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+    return JsonResponse({'error': 'Método inválido.'}, status=405)

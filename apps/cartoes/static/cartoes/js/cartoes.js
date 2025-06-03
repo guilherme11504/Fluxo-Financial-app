@@ -8,41 +8,102 @@ document.addEventListener("DOMContentLoaded", () => {
 
           const modalHTML = `
               <div id="modal-cadastro-cartao" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                  <div class="bg-gray-900 p-6 rounded-xl shadow-lg w-full max-w-2xl text-white relative">
-                      <h2 class="text-2xl font-bold mb-4">Cadastrar Novo Cartão</h2>
+  <div class="bg-gray-900 p-6 rounded-xl shadow-lg w-full max-w-5xl text-white relative">
+    <h2 class="text-3xl font-bold mb-6 text-center">Cadastrar Novo Cartão</h2>
 
-                      <div class="mb-4 ErrorContainer">
-                          <p class="text-sm text-red-500 Error"></p>
-                      </div>
+    <div class="mb-4 ErrorContainer">
+      <p class="text-sm text-red-500 Error text-center"></p>
+    </div>
 
-                      <!-- Cartão visual -->
-                      <div class="bg-gradient-to-r from-purple-500 to-blue-600 text-white p-6 rounded-xl shadow mb-6">
-                          <h3 class="text-xl font-semibold" id="preview-nome">Nome do Cartão</h3>
-                          <p class="text-sm mt-1" id="preview-bandeira">Bandeira</p>
-                          <p class="text-sm mt-1" id="preview-banco">Banco</p>
-                          <p class="text-sm mt-1" id="preview-limite">Limite: R$ 0.00</p>
-                          <p class="text-sm mt-1" id="preview-dia">Fechamento: -- | Pagamento: --</p>
-                      </div>
+    <div class="grid md:grid-cols-2 gap-8 items-center">
+      <!-- Formulário -->
+      <form id="form-cadastro-cartao" class="space-y-4">
+        <div>
+          <label class="block text-sm font-semibold mb-1" for="nome">Nome do Cartão</label>
+          <input type="text" name="nome" id="nome"
+            class="w-full px-4 py-2 rounded bg-gray-800 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            oninput="atualizaPreview()" required>
+        </div>
 
-                      <form id="form-cadastro-cartao">
-                          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                              <input type="text" name="nome" placeholder="Nome do Cartão"class="px-4 py-2 rounded bg-gray-800 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500" oninput="atualizaPreview()" required>
-                              <input type="text" name="bandeira" placeholder="Bandeira" class="px-4 py-2 rounded bg-gray-800 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500" oninput="atualizaPreview()" required>
-                              <input type="text" name="banco" placeholder="Banco" class="px-4 py-2 rounded bg-gray-800 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500" oninput="atualizaPreview()" required>
-                              <input type="number" step="0.01" name="limite" placeholder="Limite (R$)" class="px-4 py-2 rounded bg-gray-800 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500" oninput="atualizaPreview()" required>
-                              <input type="number" name="dia_fechamento" placeholder="Dia do Fechamento" class="px-4 py-2 rounded bg-gray-800 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500" oninput="atualizaPreview()" required>
-                              <input type="number" name="dia_pagamento" placeholder="Dia do Pagamento" class="px-4 py-2 rounded bg-gray-800 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500" oninput="atualizaPreview()" required>
-                              <label class="flex items-center mt-2 col-span-2">
-                                  <input type="checkbox" name="ativo" class="mr-2" checked> Cartão Ativo
-                              </label>
-                          </div>
-                          <div class="mt-6 flex justify-end gap-4">
-                              <button type="button" id="btn-cancelar" class="px-4 py-2 bg-gray-600 rounded hover:bg-gray-700">Cancelar</button>
-                              <button type="submit" class="px-6 py-2 bg-purple-500 rounded hover:bg-purple-600">Salvar</button>
-                          </div>
-                      </form>
-                  </div>
-              </div>
+        <label class="block text-sm font-semibold mb-1" for="bandeira">Bandeira</label>
+        <select name="bandeira" id="bandeira"
+        class="w-full px-4 py-2 rounded bg-gray-800 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500 text-white"
+        onchange="atualizaPreview()" required>
+        <option value="" disabled selected>Selecione a bandeira</option>
+        <option value="Visa">Visa</option>
+        <option value="MasterCard">MasterCard</option>
+        <option value="Elo">Elo</option>
+        <option value="American Express">American Express</option>
+        <option value="Hipercard">Hipercard</option>
+        <option value="Diners Club">Diners Club</option>
+        <option value="Discover">Discover</option>
+        </select>
+
+
+        <div>
+          <label class="block text-sm font-semibold mb-1" for="banco">Banco</label>
+          <input type="text" name="banco" id="banco"
+            class="w-full px-4 py-2 rounded bg-gray-800 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            oninput="atualizaPreview()" required>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold mb-1" for="limite">Limite (R$)</label>
+          <input type="number" step="0.01" name="limite" id="limite"
+            class="w-full px-4 py-2 rounded bg-gray-800 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            oninput="atualizaPreview()" required>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold mb-1" for="dia_fechamento">Dia do Fechamento</label>
+          <input type="number" name="dia_fechamento" id="dia_fechamento"
+            class="w-full px-4 py-2 rounded bg-gray-800 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            oninput="atualizaPreview()" required>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold mb-1" for="dia_pagamento">Dia do Pagamento</label>
+          <input type="number" name="dia_pagamento" id="dia_pagamento"
+            class="w-full px-4 py-2 rounded bg-gray-800 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            oninput="atualizaPreview()" required>
+        </div>
+
+        <!-- Toggle Ativo -->
+        <div class="flex items-center justify-between mt-4">
+        <label for="ativo" class="text-sm font-semibold">Cartão Ativo</label>
+        <label class="inline-flex items-center cursor-pointer">
+            <input type="checkbox" name="ativo" id="ativo" class="sr-only peer" checked>
+            <div
+            class="w-11 h-6 bg-gray-600 rounded-full peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-purple-500 peer-checked:bg-purple-500 relative transition-colors duration-300">
+            <span
+                class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-transform duration-300 peer-checked:translate-x-5"></span>
+            </div>
+        </label>
+        </div>
+
+
+        <!-- Botões -->
+        <div class="mt-6 flex justify-end gap-4">
+          <button type="button" id="btn-cancelar"
+            class="px-4 py-2 bg-gray-600 rounded hover:bg-gray-700 transition">Cancelar</button>
+          <button type="submit"
+            class="px-6 py-2 bg-purple-500 rounded hover:bg-purple-600 transition">Salvar</button>
+        </div>
+      </form>
+
+      <!-- Cartão visual -->
+      <div
+        class="bg-gradient-to-r from-purple-500 to-blue-600 text-white p-6 rounded-xl shadow w-full max-w-md mx-auto">
+        <h3 class="text-xl font-semibold mb-2" id="preview-nome">Nome do Cartão</h3>
+        <p class="text-sm" id="preview-bandeira">Bandeira</p>
+        <p class="text-sm" id="preview-banco">Banco</p>
+        <p class="text-sm" id="preview-limite">Limite: R$ 0.00</p>
+        <p class="text-sm" id="preview-dia">Fechamento: -- | Pagamento: --</p>
+      </div>
+    </div>
+  </div>
+</div>
+
           `;
 
           document.body.insertAdjacentHTML("beforeend", modalHTML);
