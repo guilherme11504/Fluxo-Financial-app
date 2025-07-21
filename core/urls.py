@@ -28,5 +28,6 @@ urlpatterns = [
     path('dashboard/', include('apps.dashboard.urls')),
     path('cartoes/', include('apps.cartoes.urls')),
     path('categorias/', include('apps.categorias.urls')),
+
 ]
 

@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class BancoConfig(AppConfig):
+class EmailsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'apps.banco'
+    name = 'apps.emails'

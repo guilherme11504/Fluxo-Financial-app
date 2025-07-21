@@ -37,7 +37,7 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
 # Application definition
 
 INSTALLED_APPS = [
-    'apps.banco',
+    'apps.emails',
     'apps.cartoes',
     'apps.create_app',
     'django.contrib.admin',
