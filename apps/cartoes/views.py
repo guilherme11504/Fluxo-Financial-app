@@ -3,13 +3,15 @@ from django.shortcuts import render, redirect
 from .models import Cartao
 from django.contrib.auth.decorators import login_required    
 from django.http import JsonResponse 
+from datetime import datetime
 
-
+@login_required
 def cartoes(request):
     user = request.user
     cartoes = Cartao.objects.filter(usuario=user)
     return render(request, 'cartoes.html', {'cartoes': cartoes})
 
+@login_required
 def register_view(request):
     if request.method != "POST":
         return redirect('dashboard:dashboard')
@@ -73,16 +75,16 @@ def register_view(request):
             'dia_pagamento': cartao.dia_pagamento,
             'dia_fechamento': cartao.dia_fechamento,
             'ativo': cartao.ativo,
+            'data_criacao': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         }, status=201)              
     except Exception as e:
         return JsonResponse({'error': str(e)})
 
-
-def delete_cartao(request):
+@login_required
+def delete_cartao(request, cartao_id):
     if request.method == 'POST':
-        cartao_id = request.POST.get('cartao_id')
         try:
-            cartao = Cartao.objects.get(id=cartao_id)
+            cartao = Cartao.objects.get(id=cartao_id, usuario_id=request.user.id)
             cartao.delete()
             messages.success(request, 'Cartão excluído com sucesso.')
         except Cartao.DoesNotExist:
@@ -92,9 +94,9 @@ def delete_cartao(request):
 
     return redirect('cartoes:cartoes')
 
-def update_cartao(request):
+@login_required
+def update_cartao(request, cartao_id):
     if request.method == 'POST':
-        cartao_id = request.POST.get('cartao_id')
         nome = request.POST.get('nome', '').strip()
         bandeira = request.POST.get('bandeira', '').strip()
         banco = request.POST.get('banco', '').strip()

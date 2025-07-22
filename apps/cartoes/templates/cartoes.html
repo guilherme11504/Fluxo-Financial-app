@@ -47,6 +47,19 @@
                             <td class="px-4 py-2">{{ cartao.nome }}</td>
                             <td class="px-4 py-2">{{ cartao.data_criacao }}</td>
                             <td class="px-4 py-2">
+                                    <button class="btn-excluir px-3 py-1 bg-red-500 rounded hover:bg-red-600" data-id="{{ cartao.id }}">Excluir</button>
+                                    <button class="btn-editar px-3 py-1 bg-blue-500 rounded hover:bg-blue-600 ml-2" 
+                                            data-id="{{ cartao.id }}"
+                                            data-nome="{{ cartao.nome }}"
+                                            data-banco="{{ cartao.banco }}"
+                                            data-limite="{{ cartao.limite }}"
+                                            data-dia_fechamento="{{ cartao.dia_fechamento }}"
+                                            data-dia_pagamento="{{ cartao.dia_pagamento }}"
+                                            data-bandeira="{{ cartao.bandeira }}"
+                                            data-ativo="{{ cartao.ativo }}">
+                                        Editar
+                                    </button>
+
                             </td>
                         </tr>
                         {% empty %}
