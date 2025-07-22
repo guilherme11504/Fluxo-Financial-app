@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Fluxo-Cartões{% endblock %}
+
+
+{% block content %}
+<!-- templates/send_email_form.html -->
+<form method="post">
+    {% csrf_token %}
+    <input type="email" name="email" placeholder="Digite seu e-mail" required>
+    <button type="submit">Enviar Confirmação</button>
+  </form>
+  
+{% endblock %}

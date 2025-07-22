@@ -23,8 +23,15 @@ from django.urls import re_path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('auth/', include('apps.autenticacao.urls')),
-    path('', lambda request: redirect('login')),
-    path('dashboard/', include('apps.dashboard.urls')),
+
+    # Com namespace para cada APP
+    path('auth/', include(('apps.autenticacao.urls', 'auth'), namespace='auth')),
+    path('dashboard/', include(('apps.dashboard.urls', 'dashboard'), namespace='dashboard')),
+    path('cartoes/', include(('apps.cartoes.urls', 'cartoes'), namespace='cartoes')),
+    path('categorias/', include(('apps.categorias.urls', 'categorias'), namespace='categorias')),
+    path('emails/', include(('apps.emails.urls', 'emails'), namespace='emails')),
+
+    # Redirecionamento para dashboard
+    path('', lambda request: redirect('login', permanent=True)),
 ]
 

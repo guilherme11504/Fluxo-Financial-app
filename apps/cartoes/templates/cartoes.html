@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Fluxo-Cartões{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'cartoes/css/cartoes.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="min-h-screen text-white py-10 px-4">
+    <div class="max-w-4xl mx-auto space-y-8">
+
+        <div class="text-center">
+            <h1 class="text-3xl font-bold">Fluxo de Cartões</h1>
+            {% if user.is_authenticated %}
+                <h2 class="text-xl mt-2">Olá, {{ user.username }}!</h2>
+            {% else %}
+                <h2 class="text-xl mt-2">Olá, visitante!</h2>
+            {% endif %}
+        </div>
+
+        <div class="text-center">
+            <button id="btn-cadastrar-cartao"
+        class="inline-flex items-center px-6 py-2 bg-emerald-500 text-white font-semibold rounded-full shadow-lg hover:bg-emerald-600 transition-all">
+    Cadastrar Cartão +
+</button>
+
+        </div>
+
+        <div>
+            <h2 class="text-2xl font-semibold mb-4">Cartões</h2>
+            <div class="overflow-x-auto rounded-lg shadow">
+                <table class="min-w-full bg-gray-800 text-white text-left">
+                    <thead class="bg-gray-700">
+                        <tr>
+                            <th class="px-4 py-2">ID</th>
+                            <th class="px-4 py-2">Nome</th>
+                            <th class="px-4 py-2">Data de Criação</th>
+                            <th class="px-4 py-2">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cartoes-container">
+                        {% for cartao in cartoes %}
+                        <tr class="border-b border-gray-700 hover:bg-gray-700">
+                            <td class="px-4 py-2">{{ cartao.id }}</td>
+                            <td class="px-4 py-2">{{ cartao.nome }}</td>
+                            <td class="px-4 py-2">{{ cartao.data_criacao }}</td>
+                            <td class="px-4 py-2">
+                                    <button class="btn-excluir px-3 py-1 bg-red-500 rounded hover:bg-red-600" data-id="{{ cartao.id }}">Excluir</button>
+                                    <button class="btn-editar px-3 py-1 bg-blue-500 rounded hover:bg-blue-600 ml-2" 
+                                            data-id="{{ cartao.id }}"
+                                            data-nome="{{ cartao.nome }}"
+                                            data-banco="{{ cartao.banco }}"
+                                            data-limite="{{ cartao.limite }}"
+                                            data-dia_fechamento="{{ cartao.dia_fechamento }}"
+                                            data-dia_pagamento="{{ cartao.dia_pagamento }}"
+                                            data-bandeira="{{ cartao.bandeira }}"
+                                            data-ativo="{{ cartao.ativo }}">
+                                        Editar
+                                    </button>
+
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr id="sem-cartoes">
+                            <td colspan="4" class="px-4 py-4 text-center text-gray-400">
+                                Nenhum cartão cadastrado ainda.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'cartoes/js/cartoes.js' %}"></script>
+{% endblock %}
