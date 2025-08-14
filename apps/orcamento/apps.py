@@ -1,0 +1,5 @@
+from django.apps import AppConfig
+
+class OrcamentoConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'apps.orcamento'  # <- esse é o nome correto se está dentro de apps/

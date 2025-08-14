@@ -30,6 +30,7 @@ urlpatterns = [
     path('cartoes/', include(('apps.cartoes.urls', 'cartoes'), namespace='cartoes')),
     path('categorias/', include(('apps.categorias.urls', 'categorias'), namespace='categorias')),
     path('emails/', include(('apps.emails.urls', 'emails'), namespace='emails')),
+    path('orcamento/', include(('apps.orcamento.urls', 'orcamento'), namespace='orcamento')),
 
     # Redirecionamento para dashboard
     path('', lambda request: redirect('login', permanent=True)),
