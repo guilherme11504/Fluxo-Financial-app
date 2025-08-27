@@ -13,7 +13,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=senha)
         if user:
             login(request, user)
-            return redirect('dashboard') 
+            return redirect('dashboard:dashboard') 
         else:
             messages.error(request, 'Usuário ou(e) senha incorretos.')
             return render(request, 'login.html')
@@ -22,7 +22,7 @@ def login_view(request):
 @login_required
 def logout_view(request):
     logout(request)
-    return redirect('login')
+    return redirect('auth:login')
 
 def register_view(request):
     if request.method == 'POST':
@@ -34,5 +34,5 @@ def register_view(request):
             messages.error(request, 'E-mail ja cadastrado.')
             return render(request, 'register.html')
         user = User.objects.create_user(username=username, email=email, password=senha)
-        return redirect('login')
+        return redirect('auth:login')
     return render(request, 'register.html')
